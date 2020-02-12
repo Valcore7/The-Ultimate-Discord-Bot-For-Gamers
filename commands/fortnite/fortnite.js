@@ -3,6 +3,8 @@
 //Modified by Valcore7
 const { RichEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
+//FortniteClient API
+const FortniteClient = require('fortnite-client').FortniteClient;
 //FNBR.CO API  //For Item Shop
 const FNBRCO = require('fnbrco.js');
 const fnbr = new FNBRCO(process.env.FNBR)
@@ -69,17 +71,15 @@ module.exports = {
          dChannel.send(dembed).then(msg => msg.delete(600000))
       } catch (err) {
          console.error(err)
-     }
-    }
-   }
+        }
+       }
+     } else {
      //Fortnite Tracker API
      //User Stats
      if (args[0].toLowerCase() === "stats") {
           if (message.deletable) message.delete(),
           console.log("stats"),
           message.channel.send("stats")
-        }
-    }
         }
           //Fortnite News
         if (args[0].toLowerCase() === "news") {
@@ -99,11 +99,5 @@ module.exports = {
           console.log("item"),
           message.channel.send("item")
         }
-        if (args[0].toLowerCase() === "status") {
-          if (message.deletable) message.delete(),
-          console.log("status"),
-          message.channel.send("status")
-        }
+     }
     }
-}
-    
