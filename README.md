@@ -19,7 +19,7 @@ FORTNITE:"Fortnite_Tracker_Token"
 FNBR:"FNBR-CO_Token"
 ```
 EX: 
-```
+```diff
 - ATPREFIX:"<@!BOT_ID>"
 + ATPREFIX:"<@!672139254020964382>"
 ```
