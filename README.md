@@ -47,7 +47,7 @@ EX:
 - [MenuDocs](https://github.com/MenuDocs/Discord.JS-Tutorial)
 - [Strandxo](https://github.com/Strandxo/simple-fortnite-api)
 - [JDaatselaar](https://github.com/JDaatselaar/statscool-old/blob/master/bot.js#L111)
-- ** More sources will be added as I continue to develop the bot. In each code that I have used and/or modified, is located at the top of the code **
+- More sources will be added as I continue to develop the bot. In each code that I have used and/or modified, is located at the top of the code
 
 ## TODO 
 - [X] Release this github repo to the public
@@ -57,7 +57,7 @@ EX:
 - [ ] Create the Apex commands (Need to do research)
 - [ ] Create D&D commands (Need to do research)
 - [ ] Release the bot in different forms ie: One only for Fortnite 
-- **More things will be added to the TODO list**
+- More things will be added to the TODO list
 
 # Thanks!
 I would like to say thanks to everyone that has helped me out so far (and in the future) in developing this discord bot!
