@@ -17,6 +17,8 @@ PREFIX:"gb!"
 ATPREFIX:"<@!BOT_ID>"
 FORTNITE:"Fortnite_Tracker_Token"
 FNBR:"FNBR-CO_Token"
+FTEMAIL:"An Epic Games Fortnite account Email"
+FTPASS:"An Epic Games Fortnite account Password"
 ```
 EX: 
 ```diff
