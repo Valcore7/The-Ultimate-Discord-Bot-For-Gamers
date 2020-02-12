@@ -52,7 +52,7 @@ EX:
 ## TODO 
 - [X] Release this github repo to the public
   - [ ] Add Fortnite commands
-    - [ ] Shop command
+    - [X] Shop command
     - [ ] Item command (search for a certain skin, backbling, wrap, etc)
     - [ ] News (going to be ```<pfx>news <br | stw | bp | tn>```)
       - br = battle royale
