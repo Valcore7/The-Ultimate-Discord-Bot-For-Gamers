@@ -29,16 +29,15 @@ EX:
 ## Commands:
 ### NOTE:
 "|" means "or"
-"<pfx>" stands for the prefix that activates your commands. Currently the prefix is "gb!"
+"<pfx>" stands for the prefix that activates your commands. Currently there is no prefix set.
 
 ```
-<pfx>ft <stats platform username> or <shop> 
+<pfx>ft <shop> 
 <pfx>ping
 <pfx>rps 
-<pfx>help <command_name>
-<pfx>lfg <duos>
-<pfx>ban <id | mention> <reason>
 <pfx>clear <amount>
+<pfx>help <command_name>
+<pfx>ban <id | mention> <reason>
 <pfx>kick <id | mention> <reason>
 <pfx>report <id | mention> <reason>
 ```
