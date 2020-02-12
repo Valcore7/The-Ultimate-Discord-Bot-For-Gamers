@@ -1,5 +1,6 @@
 //Code source: https://github.com/The-SourceCode/Discord.js-Bot-Development/blob/master/Ep_14/commands/fun/fortnite.js
 //Code Source: https://github.com/JDaatselaar/statscool-old/blob/master/bot.js#L111
+//Code Source: https://github.com/Strandxo/simple-fortnite-api
 //Modified by Valcore7
 const { RichEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");

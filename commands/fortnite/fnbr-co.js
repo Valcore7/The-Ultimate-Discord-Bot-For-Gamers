@@ -1,4 +1,4 @@
-//Code by https://github.com/Strandxo/simple-fortnite-api
+//Code Source: https://github.com/Strandxo/simple-fortnite-api
 //Modified by Valcore
 const { Client, Collection } = require("discord.js");
 const fs = require("fs");

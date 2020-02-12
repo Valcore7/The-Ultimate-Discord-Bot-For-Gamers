@@ -1,3 +1,4 @@
+//Code by Valcore7
 const prefix = (process.env.PREFIX)
 module.exports = {
  name: "ftlfg",
