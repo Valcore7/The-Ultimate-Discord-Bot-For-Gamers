@@ -52,6 +52,15 @@ EX:
 ## TODO 
 - [X] Release this github repo to the public
   - [ ] Add Fortnite commands
+    - [ ] Shop command
+    - [ ] Item command (search for a certain skin, backbling, wrap, etc)
+    - [ ] News (going to be ```<pfx>news <br | stw | bp | tn>```)
+      - br = battle royale
+      - stw = save the world
+      - bp = battle pass
+      - tn = tournament 
+    - [ ] Stats command
+    - 
 - [ ] Update code to discord.js v12
 - [ ] Create a lfg command for fortnite (looking for group)
 - [ ] Create a command that sets up a user's discord server for them (Can be a basic setup, setup for fortnite, setup for all games, etc)
