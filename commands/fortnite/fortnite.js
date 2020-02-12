@@ -70,23 +70,23 @@ module.exports = {
     }
    } else {
      //Fortnite Tracker API
-          const platforms = ["pc", "xb1", "psn"];  
-          if (message.deletable) message.delete()        
+          const platforms = ["pc", "xb1", "psn"];          
             const lastWord = args[args.length - 1].toLowerCase();
             
             let platform, username; 
 
             if (platforms.includes(lastWord)) {
-                username = args.slice(0, args.length - 1).join(" "); 
+                username = args[1]; 
                 platform = lastWord;
             } else {    
-                username = args.join(" ");
+                username = args[1];
                 platform = "pc";
             };
             
             const search = await ft.user(username, platform);
 
             if (!search.username) {
+              if (message.deletable) message.delete()
                 return message.channel.send("Couldn't find that person, try again")
                     .then(m => m.delete(5000));
             };
@@ -117,7 +117,7 @@ module.exports = {
                 .addField("Lifetime:", stripIndents`**- Wins:** ${lifetime.wins}
                 **- KD:** ${lifetime.kd}
                 **- Kills:** ${lifetime.kills}`, false)
-
+            if (message.deletable) message.delete()
             message.channel.send(embed)
         }
     }
