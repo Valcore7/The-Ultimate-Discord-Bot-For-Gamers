@@ -26,11 +26,11 @@ EX:
 + ATPREFIX:"<@!672139254020964382>"
 ```
 
-## NOTE:
+## Commands:
+### NOTE:
 "|" means "or"
 "<pfx>" stands for the prefix that activates your commands. Currently the prefix is "gb!"
 
-## Commands:
 ```
 <pfx>ft <stats platform username> or <shop> 
 <pfx>ping
@@ -42,14 +42,14 @@ EX:
 <pfx>kick <id | mention> <reason>
 <pfx>report <id | mention> <reason>
 ```
-## ** The sources to the code I have used are: ** 
+## The sources to the code I have used are: 
 - [The Source Code](https://github.com/The-SourceCode/Discord.js-Bot-Development)
 - [MenuDocs](https://github.com/MenuDocs/Discord.JS-Tutorial)
 - [Strandxo](https://github.com/Strandxo/simple-fortnite-api)
 - [JDaatselaar](https://github.com/JDaatselaar/statscool-old/blob/master/bot.js#L111)
 - ** More sources will be added as I continue to develop the bot. In each code that I have used and/or modified, is located at the top of the code **
 
-# ** TODO **
+## TODO 
 - [X] Release this github repo to the public
 - [ ] Update code to discord.js v
 - [ ] Create a lfg command for fortnite (looking for group)
@@ -59,7 +59,7 @@ EX:
 - [ ] Release the bot in different forms ie: One only for Fortnite 
 - **More things will be added to the TODO list**
 
-# **Thanks!**
+# Thanks!
 I would like to say thanks to everyone that has helped me out so far (and in the future) in developing this discord bot!
 > [Valcore7](https://github.com/Valcore7)
 > [10031623](https://github.com/10031623)
