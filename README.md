@@ -51,7 +51,8 @@ EX:
 
 ## TODO 
 - [X] Release this github repo to the public
-- [ ] Update code to discord.js v
+  - [ ] Add Fortnite commands
+- [ ] Update code to discord.js v12
 - [ ] Create a lfg command for fortnite (looking for group)
 - [ ] Create a command that sets up a user's discord server for them (Can be a basic setup, setup for fortnite, setup for all games, etc)
 - [ ] Create the Apex commands (Need to do research)
