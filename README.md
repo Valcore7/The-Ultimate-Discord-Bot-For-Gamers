@@ -51,7 +51,7 @@ EX:
 ## TODO 
 - [X] Release this github repo to the public
   - [ ] Add Fortnite commands
-    - [X] Shop command
+    - [ ] Shop command
     - [ ] Item command (search for a certain skin, backbling, wrap, etc)
     - [ ] News (going to be ```<pfx>news <br | stw | bp | tn>```)
       - br = battle royale
@@ -60,7 +60,11 @@ EX:
       - tn = tournament 
     - [ ] Stats command
     - 
+- [ ] Change the prefix command setup in [index.js](./index.js) to make it more simple and less code.
+  - [ ] change the prefix/command recongizer to be only one _block_ of code instead of two _blocks_ of code
+  - [ ] remove the ATPREFIX arg from _.env_ and change the code in [index.js](./index.js) to make ATPREFIX a constant that will automatically will set ATPREFIX to your bot's user id that way you won't have to copy and paste your bot's id into your _.env_ file. 
 - [ ] Update code to discord.js v12
+- [ ] Update code to discord.js-commando
 - [ ] Create a lfg command for fortnite (looking for group)
 - [ ] Create a command that sets up a user's discord server for them (Can be a basic setup, setup for fortnite, setup for all games, etc)
 - [ ] Create the Apex commands (Need to do research)

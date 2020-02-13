@@ -6,7 +6,7 @@ const { config } = require("dotenv");
  const client = new Client({
     disableEveryone: true
 }); 
-
+const concol = require('chalk');//This is for coloring console messages.
 // Collections
 client.commands = new Collection();
 client.aliases = new Collection();
