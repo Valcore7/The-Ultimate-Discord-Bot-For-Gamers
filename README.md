@@ -1,7 +1,5 @@
 # Ultimate Discord Bot for Gamers
 
-https://github.com/Valcore7/The-Ultimate-Discord-Bot-For-Gamers
-
 <div align="center">
     <a href="https://github.com/MenuDocs/Mandroc">
         <img src="https://img.shields.io/github/languages/top/Valcore7/The-Ultimate-Discord-Bot-For-Gamers.svg?style=for-the-badge">
