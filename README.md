@@ -13,7 +13,7 @@
     <br>
 </div>
 
-Hello, welcome to UDBFG's repository. This is a WIP (work in progress) Discord bot that fulfils all the needs of a gamer. We present the ability to view player stats on games like Apex and Fornite, and easy-to-use server moderation!
+Hello, welcome to UDBFG's repository. This is a WIP (work in progress) Discord bot that fulfils all the needs of a gamer. We present the ability to view player stats on games like Apex and Fortnite, and easy-to-use server moderation!
 
 ## About
 
@@ -28,8 +28,8 @@ If you find any issues, feel free to open an issue or pull request. We will get 
 
 ### NOTES:
 
-The pipe (`|`) character means "OR"
-UDBFG will respond to either the prefix in the `.env` file, or by mentioning the bot.
+- The pipe (`|`) character means "OR".
+- UDBFG will respond to either the prefix in the `.env` file, or by mentioning the bot.
 
 ## TODO
 
@@ -65,5 +65,3 @@ UDBFG will respond to either the prefix in the `.env` file, or by mentioning the
   - [ ] Create D&D commands (Need to do research)
 - [ ] Release the bot in different forms ie: One only for Fortnite or one only for Apex
 - More things will be added to the TODO list
-
-> [Valcore7](https://github.com/Valcore7) > [10031623](https://github.com/10031623)
