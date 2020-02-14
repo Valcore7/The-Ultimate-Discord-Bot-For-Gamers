@@ -3,45 +3,52 @@
 //And 10031623 (https://github.com/10031623)
 
 module.exports = {
-    getMember: function(message, toFind = '') {
-        toFind = toFind.toLowerCase();
+	botMentioned: msg => {
+		const regex = RegExp(`^<@!?${msg.client.user.id}>`);
+		const match = msg.content.match(regex);
+		return match || [];
+	},
 
-        let target = message.guild.members.get(toFind);
-        
-        if (!target && message.mentions.members)
-            target = message.mentions.members.first();
+	getMember: function(message, toFind = "") {
+		toFind = toFind.toLowerCase();
 
-        if (!target && toFind) {
-            target = message.guild.members.find(member => {
-                return member.displayName.toLowerCase().includes(toFind) ||
-                member.user.tag.toLowerCase().includes(toFind)
-            });
-        }
-            
-        if (!target) 
-            target = message.member;
-            
-        return target;
-    },
+		let target = message.guild.members.get(toFind);
 
-    formatDate: function(date) {
-        return new Intl.DateTimeFormat('en-US').format(date)
-    },
+		if (!target && message.mentions.members) target = message.mentions.members.first();
 
-    promptMessage: async function (message, author, time, validReactions) {
-        // We put in the time as seconds, with this it's being transfered to MS
-        time *= 1000;
+		if (!target && toFind) {
+			target = message.guild.members.find(member => {
+				return (
+					member.displayName.toLowerCase().includes(toFind) ||
+					member.user.tag.toLowerCase().includes(toFind)
+				);
+			});
+		}
 
-        // For every emoji in the function parameters, react in the good order.
-        for (const reaction of validReactions) await message.react(reaction);
+		if (!target) target = message.member;
 
-        // Only allow reactions from the author, 
-        // and the emoji must be in the array we provided.
-        const filter = (reaction, user) => validReactions.includes(reaction.emoji.name) && user.id === author.id;
+		return target;
+	},
 
-        // And ofcourse, await the reactions
-        return message
-            .awaitReactions(filter, { max: 1, time: time})
-            .then(collected => collected.first() && collected.first().emoji.name);
-    }
+	formatDate: function(date) {
+		return new Intl.DateTimeFormat("en-US").format(date);
+	},
+
+	promptMessage: async function(message, author, time, validReactions) {
+		// We put in the time as seconds, with this it's being transfered to MS
+		time *= 1000;
+
+		// For every emoji in the function parameters, react in the good order.
+		for (const reaction of validReactions) await message.react(reaction);
+
+		// Only allow reactions from the author,
+		// and the emoji must be in the array we provided.
+		const filter = (reaction, user) =>
+			validReactions.includes(reaction.emoji.name) && user.id === author.id;
+
+		// And ofcourse, await the reactions
+		return message
+			.awaitReactions(filter, { max: 1, time: time })
+			.then(collected => collected.first() && collected.first().emoji.name);
+	}
 };
