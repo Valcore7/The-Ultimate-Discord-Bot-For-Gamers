@@ -1,21 +1,19 @@
-//Original Code By: https://github.com/JDaatselaar/statscool-old/blob/master/bot.js#L111
+//Original Code By: https://github.com/JDaatselaar/statscool-old/blob/master/bot.js
 //Modified By: Valcore7
 
 //Required packages
-const { RichEmbed } = require("discord.js");
+const fs = require("fs");
+const { RichEmbed, Discord, Attachment } = require("discord.js");
 const { stripIndents } = require("common-tags");
 
 //FortniteClient API
 const FortniteClient = require('fortnite-client').FortniteClient;
-const ftemail = require(process.env.FTEMAIL);
-const ftpass = require(process.env.FTPASS);
 const credentials = {
-    email: ftemail,
-    password: ftpass
+  email: ''+ process.env.FTEMAIL +'',
+  password: ''+ process.env.FTPASS +''
 };
 const api = new FortniteClient(credentials);
 //FNBR.CO API  //For Item Shop
-
 const FNBRCO = require('fnbrco.js');
 const fnbr = new FNBRCO(process.env.FNBR);
 
@@ -27,20 +25,20 @@ module.exports = {
     name: "fortnite",
     aliases: ["ft","fortnight","fnbr","fnbrco"],
     description: "Display someone's stats, the current store, and challenges!!",
-    usage: "<pc || xb1 || ps4> <week || alltime> <all || solo || duo || squad> <username> || <shop> || <status> || <news> <br || stw || bp || tn>",
+    usage: "<stats> <pc | xb1 | ps4> <week | alltime> <all | solo | duo | squad> <username> || <shop> || <status> || <news> <br | stw | bp | tn> || <shop> || <status>", 
     run: async (client, message, args) => {
       //Get a users stats through FortniteClient
       if (args[0] === `stats` || args[0] === `userstats` || args[0] === `user-stats`) {
-          if (args[0] === `pc` || args[0] === `xb1` || args[0] === `ps4`) { //=
-        let platform = args[1]//=
+          if (args[1] === `pc` || args[1] === `xb1` || args[1] === `ps4`) { 
+        let platform = args[1]
         let channelId = message.channel.id
-        let fntuser = args[3]//=
-        let timeAll = args[1] //= //can be week or alltime //to fetch the stats for the user for the past week or dor alltime
+        let fntuser = args[4]
+        let timeAll = args[2] //can be week or alltime //to fetch the stats for the user for the past week or dor alltime
         let timewindow;
         if (timeAll) {
             timewindow = timeAll.toLowerCase()
         }
-        let gamemode = args[2];//=
+        let gamemode = args[3];
         let gamemodeName = gamemode
         let timewindowName = timewindow
         if (!timewindow) {
@@ -53,11 +51,11 @@ module.exports = {
             timewindow = 'alltime'
             timewindowName = 'alltime'
         } else {
-            gamemode = args[1];//= //if the command user does not specify a time window, then it will set gamemode to the first argument and set the time window to alltime. It will also set the fntuser to the correct args variable.
+            gamemode = args[2];//= //if the command user does not specify a time window, then it will set gamemode to the first argument and set the time window to alltime. It will also set the fntuser to the correct args variable.
             if (!fntuser === gamemode) {
-              fntuser = args[2]//=
+              fntuser = args[3]
             } else {
-              fntuser = args[3]//=
+              fntuser = args[4]
             }
             timewindow = "alltime"
             timewindowName = "alltime"
@@ -73,6 +71,7 @@ module.exports = {
             .setAuthor("Fortnite", icons[0])
             .setDescription(`Checking stats with **Username** ${fntuser}, **Platform** ${platform}, **Gamemode** ${gamemodeName} and **timewindow** ${timewindowName}`)
             .setColor(colors[2]);
+        if (message.deletable) message.delete()
         message.channel.send(embed).then(msg => msg.delete(20000))
         await getFtnStats(args[0], platform, gamemode, timewindow, channelId);
         setTimeout(function () {
@@ -82,13 +81,14 @@ module.exports = {
       }
     }
     //Allows a user to search for an item in fortnite with FortniteClient
-    if (args[0] === `item`) {
-        let item = args.join(" ");
+    if (args[0] === `item`) { 
+        let item = args[i]
         let channelId = message.channel.id;
         let embed = new RichEmbed()
             .setAuthor("Fortnite", icons[0])
             .setDescription(`Searching items with **Query** ${item}`)
             .setColor(colors[2]);
+        if (message.deletable) message.delete()
         message.channel.send(embed).then(msg => msg.delete(20000))
         await lookupItems(item, channelId)
         setTimeout(function () {
@@ -102,6 +102,7 @@ module.exports = {
             .setAuthor("Fortnite", icons[0])
             .setDescription(`Gathering today's shop`)
             .setColor(colors[2]);
+        if (message.deletable) message.delete()
         message.channel.send(embed).then(msg => msg.delete(20000))
         await shopItems(channelId)
         
@@ -115,6 +116,7 @@ module.exports = {
                 .setAuthor("Fortnite Status", icons[0])
                 .setDescription(status[0].message.replace(".", ""))
                 .setColor(colors[0])
+            if (message.deletable) message.delete()
             message.channel.send(embed)
         } catch (err) {
             console.error(err)
@@ -134,6 +136,7 @@ module.exports = {
         } else if (typeArg.toLowerCase() === 'tn' || typeArg.toLowerCase() === 'tournament' || typeArg.toLowerCase() === 'tournaments') {
             type = 'tn'
         }
+        if (message.deletable) message.delete()
         await ftnNews(type, message.channel.id)
     }
 
@@ -168,7 +171,8 @@ async function getFtnStats(fntuser, platform, mode, time, channel) {
             .addField("Win%", `${Math.round(playerStats.stats[platform][mode].matchesPlayed || '0' / playerStats.stats[platform][mode].placetop1 || '0' * 100)/100}%`, true);
         sChannel.send(embed);
     } catch (err) {
-        console.error(err);
+        console.error(err),
+        message.channel.send("AN ERROR HAS OCCURED");
     }
 }
 
@@ -205,7 +209,7 @@ async function lookupItems(itemName, channel) {
         } else {
             rarityColor = colors[0]
         }
-
+//===========================
         let embed = new RichEmbed()
             .setAuthor("Fortnite Item", icons[0])
             .setDescription(`**${items[0].name}** ${fnbrURL} `)
@@ -217,38 +221,60 @@ async function lookupItems(itemName, channel) {
             .addField("Type", items[0].type.charAt(0).toUpperCase() + items[0].type.substr(1), true);
         sChannel.send(embed).then(msg => msg.delete(300000))
     } catch (err) {
-        console.error(err);
-        return error("Some error came up. **We currently can't show upcoming items nor backpacks.**", channel)
+        console.error(err),
+        message.channel.send("AN ERROR HAS OCCURED");
     }
 }
+        async function getShopImages(itemName) {
+        let items = await fnbr.getImages(itemName)
+        console.log(items)
+        //For better item shop in the future: https://repl.it/@LolWastedJS/Canvas-Soultions
+        }
 
-async function shopItems(channel) {
+        async function shopItems(channel) {
     try {
         let shop = await fnbr.getShop();
-        let sChannel = client.channels.find(x => x.id === channel);
-        let embed = new RichEmbed()
+        let dChannel = client.channels.find(x => x.id === channel);
+        let dembed = new RichEmbed()
             .setColor(colors[0])
             .setDescription(`The items from today's itemshop https://fnbr.co/shop`)
-            .setAuthor("Fortnite Itemshop", icons[0])
-        for (let i = 0; i < shop.featured.length; i++) {
+            .setAuthor("Fortnite Daily Itemshop")
+            .setTimestamp()
+        for (let i = 0; i < shop.daily.length; i++) {
+          const shopDaily = shop.daily[i];
+          //log("")
+          let shpNM = shopDaily.name
+          //log("Name:"+ shpNM)
+          let shpID = shopDaily.id
+          //log("ID: "+ shpID)
+          let shpTP = shopDaily.type
+          //log("Type: "+ shpTP)
+          let shpLK = (`https://image.fnbr.co/${shpTP}/${shpID}/icon.png`)
+          //log("Link: "+ shpLK)
+          dembed.addField(shopDaily.name, `[IMAGE](${shpLK})  ${shopDaily.price}  ${shopDaily.priceIcon}`, true)
+        }
+        dChannel.send(dembed)
 
+        let fChannel = client.channels.find(x => x.id === channel);
+        let fembed = new RichEmbed()
+            .setColor(colors[0])
+            .setDescription(`The items from today's itemshop https://fnbr.co/shop`)
+            .setAuthor("Fortnite Featured Itemshop", icons[0])
+            .setTimestamp()
+        for (let i = 0; i < shop.featured.length; i++) {
             const shopFeatured = shop.featured[i];
             if (!shopFeatured) {
-                embed.addField("Not available cosmetic", "Empty", true)
+                fembed.addField("No available cosmetics", "Empty", true)
             } else {
-                embed.addField(shopFeatured.name, shopFeatured.price + " " + shopFeatured.priceIcon, true)
+                fembed.addField(shopFeatured.name, shopFeatured.price + " " + shopFeatured.priceIcon, true)
+                .setImage(shopFeatured.png)
             }
         }
-        embed.addBlankField()
-        for (let i = 0; i < shop.daily.length; i++) {
-            const shopDaily = shop.daily[i];
-            embed.addField(shopDaily.name, shopDaily.price + " " + shopDaily.priceIcon, true)
-        }
-        sChannel.send(embed).then(msg => msg.delete(300000))
-
+        fChannel.send(fembed)
 
     } catch (err) {
-        console.error(err)
+        console.error(err),
+        message.channel.send("AN ERROR HAS OCCURED");
     }
 }
 
@@ -257,7 +283,8 @@ async function ftnNews(type, channel) {
     try {
         var news = await FortniteClient.GET_GAME_NEWS()
     } catch (err) {
-        console.log(err)
+        console.log(err),
+        message.channel.send("AN ERROR HAS OCCURED");
     }
     if (type === 'br') {
         for (let i = 0; i < news.battleroyalenews.news.messages.length; i++) {
@@ -305,7 +332,7 @@ async function ftnNews(type, channel) {
         for (let i = 0; i < news.tournamentinformation.tournament_info.tournaments.length; i++) {
             let imageURL = news.tournamentinformation.tournament_info.tournaments[i].loading_screen_image
             let period = news.tournamentinformation.tournament_info.tournaments[i].schedule_info
-            if (period === 'SOLO' || period === 'DUO' || period.endsWith("Prizes")) {
+            if (period === 'SOLO' || period === 'DUO') {
                 period = "Not specified"
             }
             if (!imageURL) {
@@ -320,11 +347,10 @@ async function ftnNews(type, channel) {
                 .setThumbnail(imageURL)
                 .addField("Pins", news.tournamentinformation.tournament_info.tournaments[i].pin_score_requirement, true)
                 .addField("Period", period.replace("!" || ".", ""), true)
-            sChannel.send(embed)
+            return sChannel.send(embed);
         }
     }
 }
-
 function error(message, channel) {
     let sChannel = client.channels.find(x => x.id === channel);
     let embed = new RichEmbed()

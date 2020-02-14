@@ -13,23 +13,23 @@ You will need a channel named `logs` and a channel named `reports` for the kick,
 You will need to create a file named `.env` and paste the code below in it, then fill in everything by replacing the text in "" with the information.
 ```
 TOKEN:"Bot_Token"
-PREFIX:"gb!"
-ATPREFIX:"<@!BOT_ID>"
-FORTNITE:"Fortnite_Tracker_Token"
+PREFIX:"Prefix"
 FNBR:"FNBR-CO_Token"
 FTEMAIL:"An Epic Games Fortnite account Email"
 FTPASS:"An Epic Games Fortnite account Password"
 ```
 EX: 
 ```diff
-- ATPREFIX:"<@!BOT_ID>"
-+ ATPREFIX:"<@!672139254020964382>"
+- PREFIX:"Prefix"
++ PREFIX:"?!"
 ```
 
 ## Commands:
 ### NOTE:
 "|" means "or"
 "<pfx>" stands for the prefix that activates your commands. Currently there is no prefix set.
+You can also ping the bot by using ```@_bot username here_``` then the command and its arguments
+EX: [@Valcore Bot]() ft shop
 
 ```
 <pfx>ft <shop> 
@@ -52,7 +52,17 @@ EX:
 - [X] Release this github repo to the public
   - [ ] Add Fortnite commands
     - [ ] Shop command
+      - [ ] Use canvas.js to generate an image of the item shop
+        - [ ] Generate the cosmetic images
+          - [ ] Create a basic cosmetic image
+          - [ ] Add the text to the cosmetic images
+            - Like price and name
+        - [ ] Use the cosmetic images to create itemshop 
+        - [ ] Send the itemshop image to discord
+      - [ ] Add image links
+       - Only Temparay until I make the canvas.js shop
     - [ ] Item command (search for a certain skin, backbling, wrap, etc)
+      - [ ] Use canvas.js (Highly Customizable)
     - [ ] News (going to be ```<pfx>news <br | stw | bp | tn>```)
       - br = battle royale
       - stw = save the world
@@ -60,16 +70,16 @@ EX:
       - tn = tournament 
     - [ ] Stats command
     - 
-- [ ] Change the prefix command setup in [index.js](./index.js) to make it more simple and less code.
-  - [ ] change the prefix/command recongizer to be only one _block_ of code instead of two _blocks_ of code
-  - [ ] remove the ATPREFIX arg from _.env_ and change the code in [index.js](./index.js) to make ATPREFIX a constant that will automatically will set ATPREFIX to your bot's user id that way you won't have to copy and paste your bot's id into your _.env_ file. 
+- [X] Change the prefix command setup in [index.js](./index.js) to make it more simple and less code.
+  - [X] change the prefix/command recongizer to be only one _block_ of code instead of two _blocks_ of code
+  - [X] remove the ATPREFIX arg from _.env_ and change the code in [index.js](./index.js) to make ATPREFIX a constant that will automatically will set ATPREFIX to your bot's user id that way you won't have to copy and paste your bot's id into your _.env_ file. 
 - [ ] Update code to discord.js v12
-- [ ] Update code to discord.js-commando
+  - [ ] Update code to discord.js-commando for discord.js V12
 - [ ] Create a lfg command for fortnite (looking for group)
 - [ ] Create a command that sets up a user's discord server for them (Can be a basic setup, setup for fortnite, setup for all games, etc)
-- [ ] Create the Apex commands (Need to do research)
-- [ ] Create D&D commands (Need to do research)
-- [ ] Release the bot in different forms ie: One only for Fortnite 
+  - [ ] Create the Apex commands (Need to do research)
+  - [ ] Create D&D commands (Need to do research)
+- [ ] Release the bot in different forms ie: One only for Fortnite or one only for Apex
 - More things will be added to the TODO list
 
 # Thanks!
