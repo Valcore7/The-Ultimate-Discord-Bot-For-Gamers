@@ -1,100 +1,81 @@
-//Original Code creaed by The Source Code (https://github.com/The-SourceCode/Discord.js-Bot-Development)
-//Code has been modified by Valcore7 (https://github.com/Valcore7)
-//And 10031623 (https://github.com/10031623)
+/**
+ * @author T3NED
+ * @version 1.1.0
+ */
 
 const { RichEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
 const { promptMessage } = require("../../functions.js");
 
 module.exports = {
-    name: "ban",
-    category: "moderation",
-    description: "bans the member",
-    usage: "<id | mention>",
-    run: async (client, message, args) => {
-        const logChannel = message.guild.channels.find(c => c.name === "logs") || message.channel;
+	name: "ban",
+	category: "moderation",
+	description: "bans the member",
+	usage: "<id | mention>",
+	deleteInvoke: true,
+	clientPerms: ["BAN_MEMBERS"],
+	userPerms: ["BAN_MEMBERS"],
+	async run(client, message, args) {
+		const logChannel = message.guild.channels.find(c => c.name.includes("logs")) || message.channel;
 
-        if (message.deletable) message.delete();
+		// Error if there aren't any args
+		if (!args[0]) {
+			return message.reply("Please provide a user to ban.").then(m => m.delete(5000));
+		}
 
-        // No args
-        if (!args[0]) {
-            return message.reply("Please provide a person to ban.")
-                .then(m => m.delete(5000));
-        }
+		// Error if there is no reason
+		if (!args[1]) {
+			return message.reply("Please provide a reason for the ban.").then(m => m.delete(5000));
+		}
 
-        // No reason
-        if (!args[1]) {
-            return message.reply("Please provide a reason to ban.")
-                .then(m => m.delete(5000));
-        }
+		// Find the member to ban
+		const member = message.mentions.members.first() || message.guild.members.get(args[0]);
 
-        // No author permissions
-        if (!message.member.hasPermission("BAN_MEMBERS")) {
-            return message.reply("❌ You do not have permissions to ban members. Please contact a staff member")
-                .then(m => m.delete(5000));
-        
-        }
-        // No bot permissions
-        if (!message.guild.me.hasPermission("BAN_MEMBERS")) {
-            return message.reply("❌ I do not have permissions to ban members. Please contact a staff member")
-                .then(m => m.delete(5000));
-        }
+		// Error if there is no member
+		if (!member) {
+			return message.reply("Couldn't find that member, try again").then(m => m.delete(5000));
+		}
 
-        const toBan = message.mentions.members.first() || message.guild.members.get(args[0]);
+		// Self and other user ban check
+		if ([message.author.id, client.user.id].includes(member.id) || !member.bannable)
+			return message.reply("I cannot ban that member!").then(m => m.delete(5000));
 
-        // No member found
-        if (!toBan) {
-            return message.reply("Couldn't find that member, try again")
-                .then(m => m.delete(5000));
-        }
-
-        // Can't ban urself
-        if (toBan.id === message.author.id) {
-            return message.reply("You can't ban yourself...")
-                .then(m => m.delete(5000));
-        }
-
-        // Check if the user's banable
-        if (!toBan.bannable) {
-            return message.reply("I can't ban that person due to role hierarchy, I suppose.")
-                .then(m => m.delete(5000));
-        }
-        
-        const embed = new RichEmbed()
-            .setColor("#ff0000")
-            .setThumbnail(toBan.user.displayAvatarURL)
-            .setFooter(message.member.displayName, message.author.displayAvatarURL)
-            .setTimestamp()
-            .setDescription(stripIndents`**- baned member:** ${toBan} (${toBan.id})
-            **- baned by:** ${message.member} (${message.member.id})
+		// Send a log embed to the log channel
+		const embed = new RichEmbed()
+			.setColor("#ff0000")
+			.setThumbnail(member.user.displayAvatarURL)
+			.setFooter(message.member.displayName, message.author.displayAvatarURL)
+			.setTimestamp().setDescription(stripIndents`**- Offender:** ${member} (${member.id})
+            **- Moderator:** ${message.member} (${message.member.id})
             **- Reason:** ${args.slice(1).join(" ")}`);
 
-        const promptEmbed = new RichEmbed()
-            .setColor("GREEN")
-            .setAuthor(`This verification becomes invalid after 30s.`)
-            .setDescription(`Do you want to ban ${toBan}?`)
+		const promptEmbed = new RichEmbed()
+			.setColor("GREEN")
+			.setAuthor(`This verification becomes invalid after 30s.`)
+			.setDescription(`Do you want to ban ${member}?`);
 
-        // Send the message
-        await message.channel.send(promptEmbed).then(async msg => {
-            // Await the reactions and the reactioncollector
-            const emoji = await promptMessage(msg, message.author, 30, ["✅", "❌"]);
+		// Send the message
+		await message.channel.send(promptEmbed).then(async msg => {
+			// Await the reactions and the reactioncollector
+			const emoji = await promptMessage(msg, message.author, 30, ["✅", "❌"]);
 
-            // Verification stuffs
-            if (emoji === "✅") {
-                msg.delete();
+			// Verification stuffs
+			if (emoji === "✅") {
+				msg.delete();
 
-                toBan.ban(args.slice(1).join(" "))
-                    .catch(err => {
-                        if (err) return message.channel.send(`Well.... the ban didn't work out. Here's the error ${err}`)
-                    });
+				member.ban(args.slice(1).join(" ")).catch(err => {
+					if (err)
+						return message.channel.send(
+							`Well.... the ban didn't work out. Here's the error: ${err}`
+						);
+				});
 
-                logChannel.send(embed);
-            } else if (emoji === "❌") {
-                msg.delete();
+				logChannel.send(embed);
+			} else if (emoji === "❌") {
+				msg.delete();
 
-                message.reply(`ban canceled.`)
-                    .then(m => m.delete(10000));
-            }
-        });
-    }
+				message.reply(`Ban canceled.`).then(m => m.delete(5000));
+			}
+		});
+	}
 };
