@@ -26,12 +26,12 @@ If you find any issues, feel free to open an issue or pull request. We will get 
 - Create a channel called `reports` where all of the user reports are sent.
 - You need to clone the `.env.example` file and rename it to `.env`; then alter the settings respectively.
 
-### NOTES:
+## Notes:
 
 - The pipe (`|`) character means "OR".
 - UDBFG will respond to either the prefix in the `.env` file, or by mentioning the bot.
 
-## TODO
+## To Do
 
 - [x] Release this github repo to the public
   - [ ] Add Fortnite commands
