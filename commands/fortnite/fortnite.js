@@ -31,6 +31,7 @@ var icons = [
 module.exports = {
 	name: "fortnite",
 	aliases: ["ft", "fortnight", "fnbr", "fnbrco"],
+	category: "fortnite",
 	description: "Display someone's stats, the current store, and challenges!!",
 	usage:
 		"<stats> <pc | xb1 | ps4> <week | alltime> <all | solo | duo | squad> <username> || <shop> || <status> || <news> <br | stw | bp | tn> || <shop> || <status>",

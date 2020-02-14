@@ -1,55 +1,41 @@
-# [Ultimate-Discord-Bot-for-Gamers](https://github.com/Valcore7/The-Ultimate-Discord-Bot-For-Gamers)
-This is a WIP discord bot that will hopefully include everything that a discord bot for gamers needs, from stats in popular games like Apex and Fortnite, to helping you create a discord server from scratch! AGIAN THIS IS STILL A WORK IN PROGRESS AND I AM NOT VERY SKILLED AT CODING IN ANY LANGUAGE!
+# Ultimate Discord Bot for Gamers
 
-## Description
-This is a basic discord bot written in [Discord.js](https://github.com/discordjs/discord.js) and [Discord.js-commando](https://github.com/discordjs/Commando).
+https://github.com/Valcore7/The-Ultimate-Discord-Bot-For-Gamers
 
-# IMPORTANT
-This is still a work in progress, if there are any issues or requests post them in the [ISSUES](https://github.com/Valcore7/The-Ultimate-Discord-Bot-For-Gamers/issues). Thanks!
+<div align="center">
+    <a href="https://github.com/MenuDocs/Mandroc">
+        <img src="https://img.shields.io/github/languages/top/Valcore7/The-Ultimate-Discord-Bot-For-Gamers.svg?style=for-the-badge">
+    </a>
+    <a href="https://github.com/ionadev/image-gen-api/issues">
+        <img src="https://img.shields.io/github/issues/Valcore7/The-Ultimate-Discord-Bot-For-Gamers.svg?style=for-the-badge">
+    </a>
+    <a href="https://github.com/ionadev/image-gen-api/pulls">
+        <img src="https://img.shields.io/github/issues-pr/Valcore7/The-Ultimate-Discord-Bot-For-Gamers.svg?style=for-the-badge">
+    </a>
+    <br>
+</div>
 
-## REQUIREMENTS
-You will need to create a role named "duos" for lfg to work currently. lfg command is still a WIP
-You will need a channel named `logs` and a channel named `reports` for the kick, ban, and report commands to function properly.
-You will need to create a file named `.env` and paste the code below in it, then fill in everything by replacing the text in "" with the information.
-```
-TOKEN:"Bot_Token"
-PREFIX:"Prefix"
-FNBR:"FNBR-CO_Token"
-FTEMAIL:"An Epic Games Fortnite account Email"
-FTPASS:"An Epic Games Fortnite account Password"
-```
-EX: 
-```diff
-- PREFIX:"Prefix"
-+ PREFIX:"?!"
-```
+Hello, welcome to UDBFG's repository. This is a WIP (work in progress) Discord bot that fulfils all the needs of a gamer. We present the ability to view player stats on games like Apex and Fornite, and easy-to-use server moderation!
 
-## Commands:
-### NOTE:
-"|" means "or"
-"<pfx>" stands for the prefix that activates your commands. Currently there is no prefix set.
-You can also ping the bot by using ```@_bot username here_``` then the command and its arguments
-EX: [@Valcore Bot]() ft shop
+## About
 
-```
-<pfx>ft <shop> 
-<pfx>ping
-<pfx>rps 
-<pfx>clear <amount>
-<pfx>help <command_name>
-<pfx>ban <id | mention> <reason>
-<pfx>kick <id | mention> <reason>
-<pfx>report <id | mention> <reason>
-```
-## The sources to the code I have used are: 
-- [The Source Code](https://github.com/The-SourceCode/Discord.js-Bot-Development)
-- [MenuDocs](https://github.com/MenuDocs/Discord.JS-Tutorial)
-- [Strandxo](https://github.com/Strandxo/simple-fortnite-api)
-- [JDaatselaar](https://github.com/JDaatselaar/statscool-old/blob/master/bot.js#L111)
-- More sources will be added as I continue to develop the bot. In each code that I have used and/or modified, is located at the top of the code
+UDBFG is written in JavaScript; utilizing the [Discord.js](https://github.com/discordjs/discord.js) library.
+If you find any issues, feel free to open an issue or pull request. We will get back to you as soon as possible, thanks!
 
-## TODO 
-- [X] Release this github repo to the public
+## Basics
+
+- Create a channel called `logs` where all of the modlogs are sent.
+- Create a channel called `reports` where all of the user reports are sent.
+- You need to clone the `.env.example` file and rename it to `.env`; then alter the settings respectively.
+
+### NOTES:
+
+The pipe (`|`) character means "OR"
+UDBFG will respond to either the prefix in the `.env` file, or by mentioning the bot.
+
+## TODO
+
+- [x] Release this github repo to the public
   - [ ] Add Fortnite commands
     - [ ] Shop command
       - [ ] Use canvas.js to generate an image of the item shop
@@ -57,22 +43,22 @@ EX: [@Valcore Bot]() ft shop
           - [ ] Create a basic cosmetic image
           - [ ] Add the text to the cosmetic images
             - Like price and name
-        - [ ] Use the cosmetic images to create itemshop 
+        - [ ] Use the cosmetic images to create itemshop
         - [ ] Send the itemshop image to discord
       - [ ] Add image links
-       - Only Temparay until I make the canvas.js shop
+      - Only Temparay until I make the canvas.js shop
     - [ ] Item command (search for a certain skin, backbling, wrap, etc)
       - [ ] Use canvas.js (Highly Customizable)
-    - [ ] News (going to be ```<pfx>news <br | stw | bp | tn>```)
+    - [ ] News (going to be `<pfx>news <br | stw | bp | tn>`)
       - br = battle royale
       - stw = save the world
       - bp = battle pass
-      - tn = tournament 
+      - tn = tournament
     - [ ] Stats command
-    - 
-- [X] Change the prefix command setup in [index.js](./index.js) to make it more simple and less code.
-  - [X] change the prefix/command recongizer to be only one _block_ of code instead of two _blocks_ of code
-  - [X] remove the ATPREFIX arg from _.env_ and change the code in [index.js](./index.js) to make ATPREFIX a constant that will automatically will set ATPREFIX to your bot's user id that way you won't have to copy and paste your bot's id into your _.env_ file. 
+    -
+- [x] Change the prefix command setup in [index.js](./index.js) to make it more simple and less code.
+  - [x] change the prefix/command recongizer to be only one _block_ of code instead of two _blocks_ of code
+  - [x] remove the ATPREFIX arg from _.env_ and change the code in [index.js](./index.js) to make ATPREFIX a constant that will automatically will set ATPREFIX to your bot's user id that way you won't have to copy and paste your bot's id into your _.env_ file.
 - [ ] Update code to discord.js v12
   - [ ] Update code to discord.js-commando for discord.js V12
 - [ ] Create a lfg command for fortnite (looking for group)
@@ -82,7 +68,4 @@ EX: [@Valcore Bot]() ft shop
 - [ ] Release the bot in different forms ie: One only for Fortnite or one only for Apex
 - More things will be added to the TODO list
 
-# Thanks!
-I would like to say thanks to everyone that has helped me out so far (and in the future) in developing this discord bot!
-> [Valcore7](https://github.com/Valcore7)
-> [10031623](https://github.com/10031623)
+> [Valcore7](https://github.com/Valcore7) > [10031623](https://github.com/10031623)
