@@ -2,7 +2,7 @@
 const FNBRCO = require("fnbrco.js");
 const fnbr = new FNBRCO(process.env.FNBR);
 // embed variables
-var colors = ["#9d4dbb", "#cc0000", "#00aa00"];
+var colors = ["#9d4dbb", "#cc0000", "#00aa00", "#36393f"];
 var icons = [ 
 	"https://pbs.twimg.com/profile_images/1017458813199372289/QtGv1tyn_400x400.jpg",
 	"https://img.icons8.com/color/100/000000/close-window.png"
@@ -97,8 +97,8 @@ module.exports = {
       if (finalItem) { 
           const embed = new RichEmbed()
               .attachFile(finalItem)
-              .setUrl("attachment://item.png")
-              .setColor("");
+              .setImage("attachment://item.png")
+              .setColor(colors[3]);
           message.channel.send(embed);
         }
       } catch (err) {

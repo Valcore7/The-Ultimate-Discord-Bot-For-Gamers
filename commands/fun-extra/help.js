@@ -1,11 +1,9 @@
-/**
+/** 
  * @author T3NED
  * @version 1.1.0
- */
-
+*/
 const { RichEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
-
 module.exports = {
 	name: "help",
 	aliases: ["h"],

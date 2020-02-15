@@ -7,22 +7,11 @@ const client = new Client({
 	disableEveryone: true
 });
 
-// Load the command and events
+// Load the commands and events
 ["commands", "aliases"].forEach(x => (client[x] = new Collection()));
 ["command", "event"].forEach(x => require(`./handlers/${x}`)(client));
 
 // Login the client
-client.login(process.env.TOKEN);
-
-const FNBRCO = require("fnbrco.js");
-const fnbr = new FNBRCO(process.env.FNBR);
-client.on("message", async message => {
-      let items = "Renegade Raider"
-      //message.channel.send(`Getting: |${item}|`)
-      //fnbr.getImages(items).then(console.log)
-      let item = await fnbr.getImages(items)
-      let itmId = item[0].id
-      let itmType = item[0].type
-      let link = `https://image.fnbr.co/${itmType}/${itmId}/icon.png`
-      //console.log(link)
-})
+(() => {
+  client.login(process.env.TOKEN);
+})()
