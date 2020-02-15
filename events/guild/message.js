@@ -29,7 +29,7 @@ module.exports = {
 		// Invoke the command
 		if (command && command.run) {
 			// Delete the command message if specified
-			if (command.deleteInvoke && message.deletable) await message.delete();
+			if (command.deleteInvoke && message.deletable) message.delete();
 
 			// Check the client's permissions
 			if (

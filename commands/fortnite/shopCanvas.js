@@ -3,15 +3,15 @@ const FNBRCO = require("fnbrco.js");
 const fnbr = new FNBRCO(process.env.FNBR);
 // embed variables
 var colors = ["#9d4dbb", "#cc0000", "#00aa00"];
-var icons = [
+var icons = [ 
 	"https://pbs.twimg.com/profile_images/1017458813199372289/QtGv1tyn_400x400.jpg",
 	"https://img.icons8.com/color/100/000000/close-window.png"
 ];
 //Require Canvas
-const Discord = require('discord.js');
+const { Attachment, RichEmbed } = require('discord.js');
 const Canvas = require('canvas');
 
-const log = console.log
+const log = console.log // no lol //why?
 
 module.exports = {
 	name: "tf",
@@ -25,13 +25,9 @@ module.exports = {
     channel = message.channel.id;
     //Shop
 		//Gets the current item shop with FNBR.CO API
-		if (
-			args[0] === `shop` ||
-			args[0] === `store` ||
-			args[0] === `itemshop` ||
-			args[0] === `item-shop`
-		) {
-			channelId = message.channel.id;
+    if (["shop", "store", "itemshop", "item-shop"].includes(args[0]))
+		 {
+			channelId = message.channel.id; 
 			let embed = new RichEmbed()
 				.setAuthor("Fortnite", icons[0])
 				.setDescription(`Gathering today's shop`)
@@ -59,7 +55,6 @@ module.exports = {
 					);
 				}
 				dChannel.send(dembed);
-
 				let fChannel = client.channels.find(x => x.id === channel);
 				let fembed = new RichEmbed()
 					.setColor(colors[0])
@@ -83,76 +78,86 @@ module.exports = {
 		}
   if (args[0] === 'item')
     try {
-      //Need to add a way to set item to a set of arguments, that all may not be defined. An item can be up to 5 words.
-      /*
-      EX:
-      if message = ?tf item Renegade Raider
-      then item =  Renegade Raider
-      Please help!!
-      */ 
-      let item = "Renegade Raider"
-      message.channel.send(`Getting: |${item}|`)
-      items = await fnbr.getImages(item)
-      log(items)
-      console.clear()
-      let rarity = items[0].rarity
-      log(rarity)
-      let name = items[0].name
-      let price = items[0].price
-      let itmId = items[0].id
-      let itmType = items[0].type
-      //let { id, type, name, price, rarity } = item //Had to remove, was returning variables as undefined
-      let link = `https://image.fnbr.co/${itmType}/${itmId}/icon.png` //png.png is full avatar for skins //icon.png is just the face of the skin or image of cosmetic
-      message.channel.send(link)
-      let canvasItems = await canvasItem(channel, client, args, link, name, rarity, price)
+      // Declare the item from the arguments 
+      const item = args.slice(1).join(" ")
+      if (!item) return message.channel.send("Please specify an item!");
+
+      // Send the fetching message
+      const fetching = await message.channel.send(`Fetching **${item}**...`)
+
+      // Fetch the images relative to the item
+      let items = await fnbr.getImages(item)
+      if (!items[0]) return message.reply("Could not find that item!");
+      let { rarity, name, price, id, type } = items[0];
+      let link = `https://image.fnbr.co/${type}/${id}/icon.png`
+
+      // Generate a new image with canvas
+      const finalItem = await canvasItem(channel, client, args, link, name, rarity, price);
+      await fetching.delete().catch(() => null);
+      if (finalItem) message.channel.send(finalItem);
       } catch (err) {
         log(err);
+        message.channel.send(`An error occurred: ${err}`) 
       }
     async function canvasItem(client, channel, args, link, name, rarity, price) {
-      //Fortnite Font: https://db.onlinewebfonts.com/t/703617a01296c595b1daed4c5de1f6b7.ttf
-      let rarColor = rarity;
-				if (rarColor === "legendary") {
-					rarColor = '#ff6d00';
-				} else if (rarColor === "uncommon") {
-					rarColor = '#26c300';
-				} else if (rarColor === "rare") {
-					rarColor = '#0060e2';
-				} else if (rarColor === "epic") {
-					rarColor = '#7034a9';
-				} else {
-					rarColor = colors[0];
-				}
-      const { registerFont } = require('canvas')
-      registerFont('fortnite.ttf', { family: 'Burbank Big Condensed Bold' }) 
-      //https://www.npmjs.com/package/canvas //canvas docs
-	    // ctx (context) will be used to modify a lot of the canvas
-    	// Set a new canvas to the dimensions of 512x512 pixels, the size of the icon.png image
-      //https://github.com/RudySPG/Discord_Themes/blob/fe6cc8bc420c67623aca4df4beef6cc76c56261a/theme_files/fortnite/v1/sources/css/fortnite_fonts.css //Dont worry about this, just dont delete it.
+      // Determine the color of the background
+      let rarityColor;
+      switch(rarity) {
+        case "legendary": 
+          rarityColor = "#ff6d00";
+          break;
+        case "uncommon":
+          rarityColor = "#26c300";
+          break;
+        case "rare": 
+         rarityColor = "#0060e2";
+         break;
+        case "epic":
+         rarityColor = "#7034a9";
+         break;
+        default: 
+         rarityColor = colors[0];
+      }
+  
+      // Register the fortnite font
+      Canvas.registerFont('fortnite.ttf', { family: 'Fortnite' }) 
+  
+      // Initalise a frame for the canvas
 	    const canvas = Canvas.createCanvas(512, 512); 
-      const ctx = canvas.getContext('2d');
-      ctx.beginPath();
-      ctx.lineWidth= "1";
+
+      // Set the image type and 
+      const ctx = canvas.getContext('2d'); 
+
+      // Create the background based on the rarity color specified
+      ctx.beginPath(); 
+      ctx.lineWidth= "6";
       ctx.strokeStyle = "black";
-      ctx.fillStyle = rarColor;
+      ctx.fillStyle = rarityColor;
       ctx.rect(0,0,512,512)
       ctx.stroke();
       ctx.fill();
-      // Since the image takes time to load, you should await it
-	    let cosmetic = await Canvas.loadImage(link);
+     
+      // Creating the image returns a promise, we wait for it to resolve
+	    let cosmetic = await Canvas.loadImage(link); 
       let vbuckIcon = await Canvas.loadImage("https://image.fnbr.co/price/icon_vbucks.png")
-    	// This uses the canvas dimensions to stretch the image onto the entire canvas
-      //                        x, y,   width,        height
+   
+      // Draw the cosmetic onto the canvas and aligns it to the frame
 	    ctx.drawImage(cosmetic, 0, 0, canvas.width, canvas.height);
-      // Select the font size and type from one of the natively available fonts
-	    ctx.font = '50px Burbank Big Condensed Bold'; 
-    	// Select the style that will be used to fill the text in
-	    ctx.fillStyle = '#ffffff';
-	    // Actually fill the text with a solid color
-	    ctx.fillText(name, 24, 24); //Need to move it to the lower part of the image
-      ctx.drawImage(vbuckIcon, 12, 12, 64, 64); //Need to move it to the lower part of the image and to the left of the text
-	    // Use helpful Attachment class structure to process the file for you
-	    const attachment = new Discord.Attachment(canvas.toBuffer(), './item.png');
-      message.channel.send(attachment);
+
+      // Assign the font specs
+	    ctx.font = '50px Fortnite'; 
+      ctx.fillStyle = '#ffffff';
+      ctx.lineWidth= "24";
+      ctx.strokeStyle= 'black';
+	    ctx.fillText(price, 96, 468); // Item price
+      ctx.fillText(name, canvas.width/3.5, 396) // Item name
+     
+      // Draw the vbuck icon to the image
+      ctx.drawImage(vbuckIcon, 32, 424, 64, 64); 
+
+      // Make the image a Discord attachment
+	    return new Attachment(canvas.toBuffer(), 'item.png');
+   
     }
   }
 };

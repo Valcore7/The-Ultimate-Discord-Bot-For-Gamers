@@ -16,8 +16,6 @@ module.exports = {
 	clientPerms: ["BAN_MEMBERS"],
 	userPerms: ["BAN_MEMBERS"],
 	async run(client, message, args) {
-		const logChannel = message.guild.channels.find(c => c.name.includes("logs")) || message.channel;
-
 		// Error if there aren't any args
 		if (!args[0]) {
 			return message.reply("Please provide a user to ban.").then(m => m.delete(5000));
@@ -53,6 +51,8 @@ module.exports = {
 			.setColor("GREEN")
 			.setAuthor(`This verification becomes invalid after 30s.`)
 			.setDescription(`Do you want to ban ${member}?`);
+
+	const logChannel = message.guild.channels.find(c => c.name.includes("logs")) || message.channel;
 
 		// Send the message
 		await message.channel.send(promptEmbed).then(async msg => {
