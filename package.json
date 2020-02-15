@@ -18,6 +18,7 @@
   "homepage": "https://github.com/T3NED/The-Ultimate-Discord-Bot-For-Gamers#readme",
   "dependencies": {
     "ascii-table": "0.0.9",
+    "canvas": "^2.6.1",
     "common-tags": "^1.8.0",
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",

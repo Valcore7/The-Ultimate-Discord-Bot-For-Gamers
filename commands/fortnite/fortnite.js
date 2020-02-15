@@ -111,6 +111,7 @@ module.exports = {
 				message.delete().catch();
 			}, 5000);
 		}
+//=============================================================================
 		//Gets the current item shop with FNBR.CO API
 		if (
 			args[0] === `shop` ||
@@ -143,6 +144,7 @@ module.exports = {
 				error(err, message.channel.id);
 			}
 		}
+    //=============================================================================
 		//Gets the news from fortnite with FortniteClient
 		if (args[0] === `news`) {
 			let typeArg = args[1];
@@ -288,7 +290,7 @@ module.exports = {
 			console.log(items);
 			//For better item shop in the future: https://repl.it/@LolWastedJS/Canvas-Soultions
 		}
-
+//=============================================================================
 		async function shopItems(channel) {
 			try {
 				let shop = await fnbr.getShop();
@@ -338,7 +340,7 @@ module.exports = {
 				console.error(err), message.channel.send("AN ERROR HAS OCCURED");
 			}
 		}
-
+//=============================================================================
 		async function ftnNews(type, channel) {
 			let sChannel = client.channels.find(x => x.id === channel);
 			try {
