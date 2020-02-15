@@ -94,11 +94,18 @@ module.exports = {
       // Generate a new image with canvas
       const finalItem = await canvasItem(channel, client, args, link, name, rarity, price);
       await fetching.delete().catch(() => null);
-      if (finalItem) message.channel.send(finalItem);
+      if (finalItem) { 
+          const embed = new RichEmbed()
+              .attachFile(finalItem)
+              .setUrl("attachment://item.png")
+              .setColor("");
+          message.channel.send(embed);
+        }
       } catch (err) {
         log(err);
         message.channel.send(`An error occurred: ${err}`) 
       }
+      //Base code for canvas image
     async function canvasItem(client, channel, args, link, name, rarity, price) {
       // Determine the color of the background
       let rarityColor;

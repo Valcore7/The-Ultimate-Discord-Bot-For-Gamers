@@ -96,7 +96,8 @@ module.exports = {
 				}, 5000);
 			}
 		}
-		//Allows a user to search for an item in fortnite with FortniteClient
+    //canvas merge here?
+		//Allows a user to search for an item in fortnite with FNBR API
 		if (args[0] === `item`) {
 			let item = args[i];
 			let channelId = message.channel.id;
