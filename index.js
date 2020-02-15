@@ -20,9 +20,9 @@ client.on("message", async message => {
       let items = "Renegade Raider"
       //message.channel.send(`Getting: |${item}|`)
       //fnbr.getImages(items).then(console.log)
-      let item = await fnbr.getImages("Renegade Raider")
-      let itmId = item.id
-      let itmType = item.type
+      let item = await fnbr.getImages(items)
+      let itmId = item[0].id
+      let itmType = item[0].type
       let link = `https://image.fnbr.co/${itmType}/${itmId}/icon.png`
-      console.log(link)
+      //console.log(link)
 })

@@ -92,24 +92,23 @@ module.exports = {
       */ 
       let item = "Renegade Raider"
       message.channel.send(`Getting: |${item}|`)
-      items = fnbr.getImages(item);
+      items = await fnbr.getImages(item)
       log(items)
-    } catch (err) {}
-  } }
-      /*
-      let id = items.id
-      let rarity = items.rarity
-      let type = items.type
-      let name = items.name
-      let price = items.price
+      console.clear()
+      let rarity = items[0].rarity
+      log(rarity)
+      let name = items[0].name
+      let price = items[0].price
+      let itmId = items[0].id
+      let itmType = items[0].type
       //let { id, type, name, price, rarity } = item //Had to remove, was returning variables as undefined
-      let link = `https://image.fnbr.co/${type}/${id}/icon.png` //png.png is full avatar for skins //icon.png is just the face of the skin or image of cosmetic
+      let link = `https://image.fnbr.co/${itmType}/${itmId}/icon.png` //png.png is full avatar for skins //icon.png is just the face of the skin or image of cosmetic
       message.channel.send(link)
-      let canvasItems = await canvasItem(channel, client, args, link, name, rarity, price,)
+      let canvasItems = await canvasItem(channel, client, args, link, name, rarity, price)
       } catch (err) {
         log(err);
       }
-    async function canvasItem(client, channel, args, link, name, rarity, price, ) {
+    async function canvasItem(client, channel, args, link, name, rarity, price) {
       //Fortnite Font: https://db.onlinewebfonts.com/t/703617a01296c595b1daed4c5de1f6b7.ttf
       let rarColor = rarity;
 				if (rarColor === "legendary") {
@@ -123,11 +122,14 @@ module.exports = {
 				} else {
 					rarColor = colors[0];
 				}
-    	// Set a new canvas to the dimensions of 512x512 pixels, the size of the icon.png image
-	    const canvas = Canvas.createCanvas(512, 512);
+      const { registerFont } = require('canvas')
+      registerFont('fortnite.ttf', { family: 'Burbank Big Condensed Bold' }) 
+      //https://www.npmjs.com/package/canvas //canvas docs
 	    // ctx (context) will be used to modify a lot of the canvas
+    	// Set a new canvas to the dimensions of 512x512 pixels, the size of the icon.png image
+      //https://github.com/RudySPG/Discord_Themes/blob/fe6cc8bc420c67623aca4df4beef6cc76c56261a/theme_files/fortnite/v1/sources/css/fortnite_fonts.css //Dont worry about this, just dont delete it.
+	    const canvas = Canvas.createCanvas(512, 512); 
       const ctx = canvas.getContext('2d');
-      //Create the background depending on rarity
       ctx.beginPath();
       ctx.lineWidth= "1";
       ctx.strokeStyle = "black";
@@ -137,21 +139,20 @@ module.exports = {
       ctx.fill();
       // Since the image takes time to load, you should await it
 	    let cosmetic = await Canvas.loadImage(link);
-      //let vbuckIcon = await Canvas.loadImage("https://image.fnbr.co/price/icon_vbucks.png")
-      // Select the font size and type from one of the natively available fonts
-	    ctx.font = '50px sans-serif';
-    	// Select the style that will be used to fill the text in
-	    ctx.fillStyle = '#ffffff';
-	    // Actually fill the text with a solid color
-	    ctx.fillText(name, 362, 362);
+      let vbuckIcon = await Canvas.loadImage("https://image.fnbr.co/price/icon_vbucks.png")
     	// This uses the canvas dimensions to stretch the image onto the entire canvas
       //                        x, y,   width,        height
 	    ctx.drawImage(cosmetic, 0, 0, canvas.width, canvas.height);
-      //ctx.drawImage(vbuckIcon, 350, 362, 64, 64);
+      // Select the font size and type from one of the natively available fonts
+	    ctx.font = '50px Burbank Big Condensed Bold'; 
+    	// Select the style that will be used to fill the text in
+	    ctx.fillStyle = '#ffffff';
+	    // Actually fill the text with a solid color
+	    ctx.fillText(name, 24, 24); //Need to move it to the lower part of the image
+      ctx.drawImage(vbuckIcon, 12, 12, 64, 64); //Need to move it to the lower part of the image and to the left of the text
 	    // Use helpful Attachment class structure to process the file for you
-	    const attachment = new Discord.Attachment(canvas.toBuffer(), 'item.png');
+	    const attachment = new Discord.Attachment(canvas.toBuffer(), './item.png');
       message.channel.send(attachment);
     }
   }
 };
-*/
