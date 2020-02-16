@@ -137,31 +137,43 @@ module.exports = {
 
       // Create the background based on the rarity color specified
       ctx.beginPath(); 
-      ctx.lineWidth= "6";
+      ctx.lineWidth= "20";
       ctx.strokeStyle = "black";
       ctx.fillStyle = rarityColor;
-      ctx.rect(0,0,512,512)
+      ctx.rect(1,1,511,511);
       ctx.stroke();
       ctx.fill();
      
       // Creating the image returns a promise, we wait for it to resolve
 	    let cosmetic = await Canvas.loadImage(link); 
       let vbuckIcon = await Canvas.loadImage("https://image.fnbr.co/price/icon_vbucks.png")
-   
+      let overlay = await Canvas.loadImage("./overlay.png")
       // Draw the cosmetic onto the canvas and aligns it to the frame
 	    ctx.drawImage(cosmetic, 0, 0, canvas.width, canvas.height);
-
+      ctx.drawImage(overlay, 0, 0, canvas.width, canvas.height);
       // Assign the font specs
-	    ctx.font = '50px Fortnite'; 
+      let fontSize = 50;
+	do {
+		// Assign the font to the context and decrement it so it can be measured again
+		ctx.font = `${fontSize -= 10}px Fortnite`;
+		// Compare pixel width of the text to the canvas minus the approximate price size
+	} while (ctx.measureText(price).width > canvas.width - 64);
+	    //ctx.font = '64px Fortnite'; 
       ctx.fillStyle = '#ffffff';
-      ctx.lineWidth= "24";
-      ctx.strokeStyle= 'black';
-	    ctx.fillText(price, 96, 468); // Item price
-      ctx.fillText(name, canvas.width/3.5, 396) // Item name
+	    ctx.fillText(price, 96, 484); // Item price
+      fontSize = 64;
+    do {
+		// Assign the font to the context and decrement it so it can be measured again
+		ctx.font = `${fontSize -= 10}px Fortnite`;
+		// Compare pixel width of the text to the canvas minus the approximate name size
+	} while (ctx.measureText(name).width > canvas.width - 64);
+      //ctx.font = '50px Fortnite'; 
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(name, canvas.width/5, 425) // Item name
      
       // Draw the vbuck icon to the image
-      ctx.drawImage(vbuckIcon, 32, 424, 64, 64); 
-
+      ctx.drawImage(vbuckIcon, 32, 432, 60, 60); 
+      
       // Make the image a Discord attachment
 	    return new Attachment(canvas.toBuffer(), 'item.png');
    
