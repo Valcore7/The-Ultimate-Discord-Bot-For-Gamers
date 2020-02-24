@@ -37,14 +37,12 @@ If you find any issues, feel free to open an issue or pull request. We will get 
   - [ ] Add Fortnite commands
     - [ ] Shop command
       - [ ] Use canvas.js to generate an image of the item shop
-        - [ ] Generate the cosmetic images
-          - [ ] Create a basic cosmetic image
-          - [ ] Add the text to the cosmetic images
+        - [X] Generate the cosmetic images
+          - [X] Create a basic cosmetic image
+          - [X] Add the text to the cosmetic images
             - Like price and name
         - [ ] Use the cosmetic images to create itemshop
         - [ ] Send the itemshop image to discord
-      - [ ] Add image links
-      - Only Temparay until I make the canvas.js shop
     - [ ] Item command (search for a certain skin, backbling, wrap, etc)
       - [ ] Use canvas.js (Highly Customizable)
     - [ ] News (going to be `<pfx>news <br | stw | bp | tn>`)
